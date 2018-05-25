@@ -118,4 +118,15 @@ currentAccount: any;
     private onError(error) {
         this.jhiAlertService.error(error.message, null, null);
     }
+
+    getTrClassFromTask(task: Task) {
+        if (task.priority.toString() === 'HIGH') {
+            return 'table-danger';
+        } else if (task.priority.toString() === 'NORMAL') {
+            return 'table-warning';
+        } else if (task.priority.toString() === 'LOW') {
+            return 'table-success';
+        }
+        return '';
+    }    
 }

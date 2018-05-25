@@ -10,6 +10,7 @@ import { Task } from './task.model';
 import { TaskPopupService } from './task-popup.service';
 import { TaskService } from './task.service';
 import { Category, CategoryService } from '../category';
+import { Principal } from '../../shared';
 
 @Component({
     selector: 'jhi-task-dialog',
@@ -28,11 +29,15 @@ export class TaskDialogComponent implements OnInit {
         private jhiAlertService: JhiAlertService,
         private taskService: TaskService,
         private categoryService: CategoryService,
-        private eventManager: JhiEventManager
+        private eventManager: JhiEventManager,
+        private principal: Principal
     ) {
     }
 
     ngOnInit() {
+        this.principal.identity().then((account) => {
+            this.task.user = account.login;
+        });
         this.isSaving = false;
         this.categoryService.query()
             .subscribe((res: HttpResponse<Category[]>) => { this.categories = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
